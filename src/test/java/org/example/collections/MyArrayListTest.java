@@ -88,21 +88,6 @@ public class MyArrayListTest {
         }
         Assertions.assertEquals(0, array.size());
     }
-
-    @Test
-    public void trimToSize(){
-        MyArrayList<String> array = new MyArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
-        }
-
-        array.remove(3);
-        array.remove("A2");
-
-        array.trimToSize();
-
-        Assertions.assertEquals(3, array.size());
-    }
     @Test
     public void sort() {
         MyArrayList<Integer> array = new MyArrayList<>();

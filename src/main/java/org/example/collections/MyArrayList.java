@@ -94,16 +94,16 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
         }
         countElement = 0;
     }
-    @Override
-    public void trimToSize() {
-        innerArray = Arrays.copyOf(innerArray, countElement);
-        currentSize = innerArray.length;
-    }
 
     @Override
     public void sort(Comparator<? super E> comparator) {
         trimToSize();
         mergeSort((E[])innerArray, comparator);
+    }
+
+    private void trimToSize() {
+        innerArray = Arrays.copyOf(innerArray, countElement);
+        currentSize = innerArray.length;
     }
 
     private void mergeSort(E[] arr, Comparator<? super E> comparator) {
