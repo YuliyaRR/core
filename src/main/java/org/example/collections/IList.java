@@ -10,6 +10,5 @@ public interface IList <E> {
     boolean remove(E element);
     int size();
     void clear();
-    void trimToSize();
     void sort(Comparator<? super E> comparator);
 }
