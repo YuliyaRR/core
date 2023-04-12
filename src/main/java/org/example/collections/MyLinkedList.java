@@ -2,8 +2,9 @@ package org.example.collections;
 
 import java.util.Comparator;
 
-/*Permits all elements (including null);
- *Operations that index into the list will traverse the list from the beginning or the end, whichever is closer to the specified index.
+/* Permits all elements (including null);
+ * Operations that index into the list will traverse the list from the beginning or the end,
+ * whichever is closer to the specified index.
  */
 public class MyLinkedList<E> implements IList<E>{
     private Node<E> first;
@@ -29,9 +30,9 @@ public class MyLinkedList<E> implements IList<E>{
     /*Вставка на любую позицию в списке*/
     @Override
     public void add(int index, E element) {
-        checkIndex(index);
-
-        if(index == this.size) {
+        if(index > this.size || index < 0){
+            throw new IndexOutOfBoundsException();
+        } else if(index == this.size) {
             add(element);
         } else {
             Node<E> currentNodeByIndex = getByIndex(index);
@@ -45,7 +46,6 @@ public class MyLinkedList<E> implements IList<E>{
             }
             size++;
         }
-
     }
 
     @Override
@@ -129,17 +129,27 @@ public class MyLinkedList<E> implements IList<E>{
     }
 
     private void checkIndex(int index) {
-        if(index > this.size || index < 0){
+        if(index >= this.size || index < 0){
             throw new IndexOutOfBoundsException();
         }
     }
-    /*from head to tail*/
+
     private Node<E> getByIndex(int index) {
-        Node<E> secondLastNode = this.first;
-        for (int i = 0; i < index; i++) {
-            secondLastNode = secondLastNode.next;
+        int indexOfMiddle = this.size / 2;
+        Node<E> node;
+        if(index >= indexOfMiddle) { //from tail to head
+            node = this.last;
+            for (int i = size - 1; i != index ; i--) {
+                node = node.previous;
+            }
+        } else { //from head to tail
+            node = this.first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+
         }
-        return secondLastNode;
+        return node;
     }
 
     @Override
