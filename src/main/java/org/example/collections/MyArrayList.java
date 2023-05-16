@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
-
+//null isn't supported
 public class MyArrayList<E> implements IList<E>, Iterable<E>{
     private final int DEFAULT_SIZE = 10;
     private Object[] innerArray;
@@ -22,7 +22,7 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
     }
 
     @Override
-    public void add(E element) {
+    public boolean add(E element) {
         if(element == null) {
             throw new NullPointerException();
         }
@@ -31,10 +31,11 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
         }
         innerArray[countElement] = element;
         countElement++;
+        return true;
     }
 
     @Override
-    public void add(int index, E element) {
+    public boolean add(int index, E element) {
         checkIndex(index);
 
         if(!checkSize()){
@@ -47,10 +48,12 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
 
         innerArray[index] = element;
         countElement++;
+        return true;
     }
 
     @Override
     public E get(int index) {
+        checkIndex(index);
         return (E) innerArray[index];
     }
 
@@ -89,9 +92,7 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
     }
     @Override
     public void clear() {
-        for (int i = 0; i < countElement; i++) {
-            innerArray[i] = null;
-        }
+        innerArray = new Object[DEFAULT_SIZE];
         countElement = 0;
     }
 
@@ -99,6 +100,14 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
     public void sort(Comparator<? super E> comparator) {
         trimToSize();
         mergeSort((E[])innerArray, comparator);
+    }
+
+    @Override
+    public boolean contains(E element) {
+        if(element == null) {
+            throw new NullPointerException();
+        }
+         return Arrays.stream(innerArray).anyMatch(element::equals);
     }
 
     private void trimToSize() {
