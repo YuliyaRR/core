@@ -1,6 +1,7 @@
 package org.example.collections;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /* Permits all elements (including null);
  * Operations that index into the list will traverse the list from the beginning or the end,
@@ -13,7 +14,7 @@ public class MyLinkedList<E> implements IList<E>{
 
     /*Вставка в конец списка*/
     @Override
-    public void add(E element) {
+    public boolean add(E element) {
         if (this.size == 0) {
             Node<E> node = new Node<>(null, element, null);
             this.first = node;
@@ -25,11 +26,12 @@ public class MyLinkedList<E> implements IList<E>{
             this.last = node;
         }
         size++;
+        return true;
     }
 
     /*Вставка на любую позицию в списке*/
     @Override
-    public void add(int index, E element) {
+    public boolean add(int index, E element) {
         if(index > this.size || index < 0){
             throw new IndexOutOfBoundsException();
         } else if(index == this.size) {
@@ -46,6 +48,7 @@ public class MyLinkedList<E> implements IList<E>{
             }
             size++;
         }
+        return true;
     }
 
     @Override
@@ -126,6 +129,16 @@ public class MyLinkedList<E> implements IList<E>{
     @Override
     public void sort(Comparator<? super E> comparator) {
 
+    }
+
+    @Override
+    public boolean contains(E element) {
+        for (Node<E> node = first; node != null; node = node.next) {
+            if(Objects.equals(node.value, element)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkIndex(int index) {
