@@ -8,101 +8,93 @@ import java.util.Comparator;
 public class MyArrayListTest {
     @Test
     public void size(){
-        MyArrayList<String> array = new MyArrayList<>();
-        int size = array.size();
+        IList<String> list = new MyArrayList<>();
+        int size = list.size();
         Assertions.assertEquals(0, size);
     }
 
     @Test
     public void add(){
-        MyArrayList<String> array = new MyArrayList<>();
-        array.add("A");
-        Assertions.assertEquals(1, array.size());
+        IList<String> list = new MyArrayList<>();
+        list.add("A");
+        Assertions.assertEquals(1, list.size());
     }
     @Test
     public void addAndIncrease(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 11; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
-        Assertions.assertEquals(11, array.size());
+        Assertions.assertEquals(11, list.size());
     }
     @Test
     public void addByIndex(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
-        array.add(3, "B");
-        Assertions.assertEquals(6, array.size());
+        list.add(3, "B");
+        Assertions.assertEquals(6, list.size());
     }
 
     @Test
     public void addByIndex2(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
-        array.add(3, "B");
-        Assertions.assertEquals("B", array.get(3));
+        list.add(3, "B");
+        Assertions.assertEquals("B", list.get(3));
     }
 
     @Test
     public void removeByIndex(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
-        array.remove(3);
-        Assertions.assertEquals(4, array.size());
+        list.remove(3);
+        Assertions.assertEquals(4, list.size());
     }
 
     @Test
     public void removeByObject(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
 
-        array.remove("A1");
+        list.remove("A1");
 
-        Assertions.assertEquals(4, array.size());
+        Assertions.assertEquals(4, list.size());
     }
     @Test
     public void clean(){
-        MyArrayList<String> array = new MyArrayList<>();
+        IList<String> list = new MyArrayList<>();
         for (int i = 0; i < 5; i++) {
-            array.add("A" + i);
+            list.add("A" + i);
         }
 
-        for (int i = 0; i < 5; i++) {
-            System.out.print(array.get(i) + " ");
-        }
+        list.clear();
 
-        System.out.println();
-
-        array.clear();
-
-        for (int i = 0; i < 5; i++) {
-            System.out.print(array.get(i) + " ");
-        }
-        Assertions.assertEquals(0, array.size());
+        Assertions.assertEquals(0, list.size());
     }
     @Test
     public void sort() {
-        MyArrayList<Integer> array = new MyArrayList<>();
-        array.add(5);
-        array.add(1);
-        array.add(-5);
-        array.add(8);
-        array.add(14);
-        array.add(0);
-        array.add(16);
-        array.add(2);
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
+        list.add(14);
+        list.add(0);
+        list.add(16);
+        list.add(2);
 
-        array.sort(Comparator.comparingInt(Integer::intValue));
+        list.sort(Comparator.comparingInt(Integer::intValue));
 
-        MyArrayList<Integer> arrayExpected = new MyArrayList<>();
+
+        IList<Integer> arrayExpected = new MyArrayList<>();
         arrayExpected.add(-5);
         arrayExpected.add(0);
         arrayExpected.add(1);
@@ -112,24 +104,24 @@ public class MyArrayListTest {
         arrayExpected.add(14);
         arrayExpected.add(16);
 
-        Assertions.assertEquals(array, arrayExpected);
+        Assertions.assertEquals(list, arrayExpected);
     }
 
     @Test
     public void sort2() {
-        MyArrayList<Integer> array = new MyArrayList<>();
-        array.add(5);
-        array.add(1);
-        array.add(-5);
-        array.add(8);
-        array.add(14);
-        array.add(0);
-        array.add(16);
-        array.add(2);
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
+        list.add(14);
+        list.add(0);
+        list.add(16);
+        list.add(2);
 
-        array.sort(Comparator.comparingInt(Integer::intValue));
+        list.sort(Comparator.comparingInt(Integer::intValue));
 
-        MyArrayList<Integer> arrayExpected = new MyArrayList<>();
+        IList<Integer> arrayExpected = new MyArrayList<>();
         arrayExpected.add(-5);
         arrayExpected.add(0);
         arrayExpected.add(1);
@@ -139,20 +131,53 @@ public class MyArrayListTest {
         arrayExpected.add(14);
         arrayExpected.add(16);
 
-        Assertions.assertNotEquals(array, arrayExpected);
+        Assertions.assertNotEquals(list, arrayExpected);
     }
 
     @Test
     public void toStringTest() {
-        MyArrayList<Integer> array = new MyArrayList<>();
-        array.add(5);
-        array.add(1);
-        array.add(-5);
-        array.add(8);
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
 
         String expected = "[5, 1, -5, 8]";
 
-        Assertions.assertEquals(expected, array.toString());
+        Assertions.assertEquals(expected, list.toString());
+    }
+
+    @Test
+    public void containsIsTrue() {
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
+
+        Assertions.assertTrue(list.contains(5));
+    }
+
+    @Test
+    public void containsIsFalse() {
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
+
+        Assertions.assertFalse(list.contains(10));
+    }
+
+    @Test
+    public void containsThrowsNPE() {
+        IList<Integer> list = new MyArrayList<>();
+        list.add(5);
+        list.add(1);
+        list.add(-5);
+        list.add(8);
+
+        Assertions.assertThrows(NullPointerException.class, () -> list.contains(null));
     }
 
 
