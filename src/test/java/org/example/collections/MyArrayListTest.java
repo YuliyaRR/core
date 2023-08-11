@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MyArrayListTest {
     @Test
@@ -178,6 +179,19 @@ public class MyArrayListTest {
         list.add(8);
 
         Assertions.assertThrows(NullPointerException.class, () -> list.contains(null));
+    }
+
+    @Test
+    public void forEachTest() {
+        IList<Integer> list = new MyArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(ThreadLocalRandom.current().nextInt(100));
+        }
+        int index = 0;
+        for (Integer num: list) {
+            index++;
+        }
+        Assertions.assertEquals(list.size(), index);
     }
 
 

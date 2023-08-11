@@ -3,6 +3,8 @@ package org.example.collections;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MyLinkedListTest {
     @Test
     public void size(){
@@ -255,5 +257,18 @@ public class MyLinkedListTest {
         linkedList.add("B");
         linkedList.add("C");
         Assertions.assertFalse(linkedList.contains(null));
+    }
+
+    @Test
+    public void forEachTest() {
+        IList<Integer> list = new MyLinkedList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(ThreadLocalRandom.current().nextInt(100));
+        }
+        int index = 0;
+        for (Integer num: list) {
+            index++;
+        }
+        Assertions.assertEquals(list.size(), index);
     }
 }
