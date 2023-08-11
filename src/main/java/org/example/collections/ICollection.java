@@ -1,6 +1,6 @@
 package org.example.collections;
 
-public interface ICollection<E> {
+public interface ICollection<E> extends Iterable<E>{
     boolean add(E element);
     boolean remove(E element);
     int size();
