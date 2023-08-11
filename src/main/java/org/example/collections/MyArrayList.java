@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
 //null isn't supported
-public class MyArrayList<E> implements IList<E>, Iterable<E>{
+public class MyArrayList<E> implements IList<E>{
     private final int DEFAULT_SIZE = 10;
     private Object[] innerArray;
     private int currentSize;//расчетный показатель
@@ -150,16 +150,16 @@ public class MyArrayList<E> implements IList<E>, Iterable<E>{
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            int curElement = -1;
+            int curElement = 0;
 
             @Override
             public boolean hasNext() {
-                return curElement + 1 < innerArray.length;
+                return curElement < innerArray.length;
             }
 
             @Override
             public E next() {
-                int nextIndex = curElement + 1;
+                int nextIndex = curElement;
                 if (nextIndex >= innerArray.length) {
                     throw new IndexOutOfBoundsException();
                 } else {
