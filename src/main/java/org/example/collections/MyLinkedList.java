@@ -1,6 +1,7 @@
 package org.example.collections;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Objects;
 
 /* Permits all elements (including null);
@@ -139,6 +140,24 @@ public class MyLinkedList<E> implements IList<E>{
             }
         }
         return false;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private Node<E> node = first;
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public E next() {
+                E element = node.value;
+                node = node.next;
+                return element;
+            }
+        };
     }
 
     private void checkIndex(int index) {
