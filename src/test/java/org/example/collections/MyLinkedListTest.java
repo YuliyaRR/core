@@ -271,4 +271,36 @@ public class MyLinkedListTest {
         }
         Assertions.assertEquals(list.size(), index);
     }
+
+    @Test
+    public void pollCheckReturningElementAndSize(){
+        IQueue<String> queue = new MyLinkedList<>();
+        queue.add("A");
+        queue.add("B");
+        queue.add("C");
+        Assertions.assertEquals("A", queue.poll());
+        Assertions.assertEquals(2, queue.size());
+    }
+
+    @Test
+    public void pollInEmptyQueue(){
+        IQueue<String> queue = new MyLinkedList<>();
+        Assertions.assertNull(queue.poll());
+    }
+
+    @Test
+    public void peekCheckReturningElementAndSize(){
+        IQueue<String> queue = new MyLinkedList<>();
+        queue.add("A");
+        queue.add("B");
+        queue.add("C");
+        Assertions.assertEquals("A", queue.peek());
+        Assertions.assertEquals(3, queue.size());
+    }
+
+    @Test
+    public void peekInEmptyQueue(){
+        IQueue<String> queue = new MyLinkedList<>();
+        Assertions.assertNull(queue.peek());
+    }
 }
