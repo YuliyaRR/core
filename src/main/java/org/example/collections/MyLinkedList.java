@@ -8,7 +8,7 @@ import java.util.Objects;
  * Operations that index into the list will traverse the list from the beginning or the end,
  * whichever is closer to the specified index.
  */
-public class MyLinkedList<E> implements IList<E>{
+public class MyLinkedList<E> implements IList<E>, IQueue<E>{
     private Node<E> first;
     private Node<E> last;
     private int size;
@@ -158,6 +158,27 @@ public class MyLinkedList<E> implements IList<E>{
                 return element;
             }
         };
+    }
+
+    @Override
+    public E poll() {
+        if(this.size == 0) {
+            return null;
+        } else {
+            Node<E> firstNode = this.first;
+            if(firstNode.next != null) {
+                this.first = firstNode.next;
+            } else {
+                this.first = null;
+            }
+            this.size--;
+            return firstNode.value;
+        }
+    }
+
+    @Override
+    public E peek() {
+        return this.size == 0 ? null : this.first.value;
     }
 
     private void checkIndex(int index) {
