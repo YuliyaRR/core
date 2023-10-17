@@ -1,4 +1,4 @@
-package org.example.collections;
+package org.example.collections.list;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package org.example.collections;
+package org.example.collections.set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

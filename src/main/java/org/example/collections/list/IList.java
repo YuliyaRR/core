@@ -1,4 +1,6 @@
-package org.example.collections;
+package org.example.collections.list;
+
+import org.example.collections.ICollection;
 
 import java.util.Comparator;
 

@@ -1,11 +1,11 @@
-package org.example.collections;
+package org.example.collections.list;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
 //null isn't supported
-public class MyArrayList<E> implements IList<E>{
+public class MyArrayList<E> implements IList<E> {
     private final int DEFAULT_SIZE = 10;
     private Object[] innerArray;
     private int currentSize;//расчетный показатель
@@ -193,6 +193,7 @@ public class MyArrayList<E> implements IList<E>{
                 return false;
             }
         }
+        System.out.println(list);
 
         return true;
     }

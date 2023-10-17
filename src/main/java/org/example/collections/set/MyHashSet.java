@@ -1,4 +1,7 @@
-package org.example.collections;
+package org.example.collections.set;
+
+import org.example.collections.map.IMap;
+import org.example.collections.map.MyHashMap;
 
 import java.util.Iterator;
 

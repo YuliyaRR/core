@@ -1,5 +1,6 @@
-package org.example.collections;
+package org.example.collections.list;
 
+import org.example.collections.list.queue_for_linked_list.IQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

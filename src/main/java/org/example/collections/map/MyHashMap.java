@@ -1,8 +1,8 @@
-package org.example.collections;
+package org.example.collections.map;
 
 import java.util.*;
 
-public class MyHashMap <K,V> implements IMap<K,V>{
+public class MyHashMap <K,V> implements IMap<K,V> {
     private static final float LOAD_FACTOR = 0.75f;
     private static final int INITIAL_CAPACITY = 16;
     private Entry<K, V>[] arr;

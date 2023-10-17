@@ -1,4 +1,6 @@
-package org.example.collections;
+package org.example.collections.list;
+
+import org.example.collections.list.queue_for_linked_list.IQueue;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -8,7 +10,7 @@ import java.util.Objects;
  * Operations that index into the list will traverse the list from the beginning or the end,
  * whichever is closer to the specified index.
  */
-public class MyLinkedList<E> implements IList<E>, IQueue<E>{
+public class MyLinkedList<E> implements IList<E>, IQueue<E> {
     private Node<E> first;
     private Node<E> last;
     private int size;
