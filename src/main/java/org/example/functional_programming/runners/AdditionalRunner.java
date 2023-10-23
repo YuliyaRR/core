@@ -1,4 +1,4 @@
-package org.example.functional_programming;
+package org.example.functional_programming.runners;
 
 import org.example.functional_programming.dto.Gender;
 import org.example.functional_programming.dto.Operator;
