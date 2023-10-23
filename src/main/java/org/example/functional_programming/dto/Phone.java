@@ -27,9 +27,6 @@ public class Phone {
 
     @Override
     public String toString() {
-        return "Phone{" +
-                "operator=" + operator +
-                ", number='" + number + '\'' +
-                '}';
+        return operator + ": " + number;
     }
 }
