@@ -4,11 +4,12 @@ import org.example.functional_programming.dto.Gender;
 import org.example.functional_programming.dto.Operator;
 import org.example.functional_programming.dto.Person;
 import org.example.functional_programming.dto.Phone;
-import org.example.functional_programming.func_util.FunctionUtil;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
+
+import static org.example.functional_programming.func_util.FunctionUtil.*;
 
 
 public class BaseRunner {
@@ -29,93 +30,93 @@ public class BaseRunner {
         int limitAge = 20;
         System.out.printf("Filter persons older than %d\n", limitAge);
         System.out.println("-----------------------------------------------");
-        FunctionUtil.filterPersonsByAge(persons, limitAge);
+        filterPersonsByAge(persons, limitAge);
         System.out.println("***********************************************");
 
         int limitWeight = 60;
         System.out.printf("Filter persons heavier than %d kg than and print their names\n", limitWeight);
         System.out.println("-----------------------------------------------");
-        FunctionUtil.filterPersonsByWeightAndTransformToListNames(persons, limitWeight);
+        filterPersonsByWeightAndTransformToListNames(persons, limitWeight);
         System.out.println("***********************************************");
 
 
         int amountPhones = 2;
         System.out.printf("Filter persons who have more than %d phone(-s) than and print their phone numbers\n", amountPhones);
         System.out.println("-----------------------------------------------");
-        FunctionUtil.filterPersonsByAmountOfPhonesConvertToListPhoneNumbers(persons, amountPhones);
+        filterPersonsByAmountOfPhonesConvertToListPhoneNumbers(persons, amountPhones);
         System.out.println("***********************************************");
 
         System.out.println("Print all person's names separated by commas");
         System.out.println("-----------------------------------------------");
-        String names = FunctionUtil.convertPersonsToNamesThenCollectToStringWithComma(persons);
+        String names = convertPersonsToNamesThenCollectToStringWithComma(persons);
         System.out.println(names);
         System.out.println("-----------------------------------------------");
         System.out.println("Print all person's names separated by commas using custom collector");
         System.out.println("-----------------------------------------------");
-        String usingCustomCollector = FunctionUtil.convertPersonsToNamesUsingCustomStringCollector(persons, ", ");
+        String usingCustomCollector = convertPersonsToNamesUsingCustomStringCollector(persons, ", ");
         System.out.println(usingCustomCollector);
         System.out.println("***********************************************");
 
         System.out.println("Sort all person by age in descending order if age equals then sort by name");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.sortPersonsByAgeDescIfAgeEqualThenByName(persons);
+        sortPersonsByAgeDescIfAgeEqualThenByName(persons);
         System.out.println("***********************************************");
 
         System.out.println("Group persons by gender and print their names");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPersonsByGender(persons);
+        groupPersonsByGender(persons);
         System.out.println("-----------------------------------------------");
         System.out.println("Group persons by gender using custom collectors");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPersonsByGenderUsingCustomCollectors(persons, ", ", Person::getGender);
+        groupPersonsByGenderUsingCustomCollectors(persons, ", ", Person::getGender);
         System.out.println("***********************************************");
 
         String phoneNumber = "584-789-425";
         System.out.printf("Find person with phone number - %s\n", phoneNumber);
         System.out.println("-----------------------------------------------");
-        boolean result = FunctionUtil.containsPersonWithSpecificPhoneNumber(persons, phoneNumber);
+        boolean result = containsPersonWithSpecificPhoneNumber(persons, phoneNumber);
         System.out.printf("Result - %b\n", result);
         System.out.println("***********************************************");
 
         int limitPerson = 4;
         System.out.printf("Collect unique phone operators from %d person\n", limitPerson);
         System.out.println("-----------------------------------------------");
-        FunctionUtil.collectUniquePhoneOperatorsFromNPerson(persons, limitPerson);
+        collectUniquePhoneOperatorsFromNPerson(persons, limitPerson);
         System.out.println("***********************************************");
 
         System.out.println("Calculate average weight of all persons");
         System.out.println("-----------------------------------------------");
-        double avgWeight = FunctionUtil.avgWeightOfPersons(persons);
+        double avgWeight = avgWeightOfPersons(persons);
         System.out.printf("Average weight - %.3f\n", avgWeight);
         System.out.println("***********************************************");
 
         System.out.println("Define the youngest person");
         System.out.println("-----------------------------------------------");
-        System.out.println(FunctionUtil.findTheYoungestPerson(persons));
+        System.out.println(findTheYoungestPerson(persons));
         System.out.println("***********************************************");
 
         System.out.println("Group phones by operator and print phone numbers belonging to each operator");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPhoneByOperatorAndPrintOnlyPhoneNumber(persons);
+        groupPhoneByOperatorAndPrintOnlyPhoneNumber(persons);
         System.out.println("-----------------------------------------------");
         System.out.println("Group phones by operator using custom collectors");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPhoneAndPrintOnlyPhoneNumberUsingCustomCollectors(persons, ", ", Phone::getOperator);
+        groupPhoneAndPrintOnlyPhoneNumberUsingCustomCollectors(persons, ", ", Phone::getOperator);
         System.out.println("***********************************************");
 
         System.out.println("Group persons by gender and count them in each group");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPersonsByGenderAndCountEachGender(persons);
+        groupPersonsByGenderAndCountEachGender(persons);
         System.out.println("-----------------------------------------------");
         System.out.println("Group persons by gender and count them in each group using custom collectors");
         System.out.println("-----------------------------------------------");
-        FunctionUtil.groupPersonsAndCountEachGroupUsingCustomCollectors(persons, Person::getGender);
+        groupPersonsAndCountEachGroupUsingCustomCollectors(persons, Person::getGender);
         System.out.println("***********************************************");
 
         System.out.println("Count the frequency of words in a file");
         System.out.println("-----------------------------------------------");
         File file = new File("test.txt");
-        Map<String, Integer> res = FunctionUtil.countWordsInFile(file);
+        Map<String, Integer> res = countWordsInFile(file);
         res.forEach((k, v) -> System.out.printf("%s - %s\n", k, v));
         System.out.println("***********************************************");
 
@@ -126,20 +127,20 @@ public class BaseRunner {
                 LocalDate.of(2019, 3, 31),
                 LocalDate.of(2025, 12, 25)
         );
-        long diffBetweenFirstAndLastDate = FunctionUtil.diffBetweenFirstAndLastDate(dates);
+        long diffBetweenFirstAndLastDate = diffBetweenFirstAndLastDate(dates);
         System.out.printf("Between first and last date %d days\n", diffBetweenFirstAndLastDate);
         System.out.println("***********************************************");
 
         List<String> info = new ArrayList<>(List.of("abc", "15", "0.25", "-100*;l", "-70"));
         System.out.println("Define avg in list which may contain invalid strings");
         System.out.println("-----------------------------------------------");
-        double avg = FunctionUtil.avg(info);
+        double avg = avg(info);
         System.out.printf("Average value between numbers in a list - %f\n", avg);
         System.out.println("***********************************************");
 
         System.out.println("Generate 1 million random numbers and sum them");
         System.out.println("-----------------------------------------------");
-        long sumRandom = FunctionUtil.sumRandomNumbersWithParallelStream();
+        long sumRandom = sumRandomNumbersWithParallelStream();
         System.out.printf("Sum 1 million random numbers is %d\n", sumRandom);
         System.out.println("***********************************************");
 
