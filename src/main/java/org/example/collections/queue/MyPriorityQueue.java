@@ -6,16 +6,19 @@ import java.util.Iterator;
 
 public class MyPriorityQueue<E> implements MyQueue<E> {
     private final static int DEFAULT_INIT_CAPACITY = 8;
-    private Object[] queue;
+    private E[] queue;
     private int amountElement;
     private Comparator<? super E> comparator;
+    private boolean isComparatorFromComparable;
 
     public MyPriorityQueue() {
-        this.queue = new Object[DEFAULT_INIT_CAPACITY];
+        this.queue = (E[]) new Object[DEFAULT_INIT_CAPACITY];
+        initComparator();
+        this.isComparatorFromComparable = true;
     }
 
     public MyPriorityQueue(Comparator<? super E> comparator) {
-        this();
+        this.queue = (E[]) new Object[DEFAULT_INIT_CAPACITY];
         this.comparator = comparator;
     }
 
@@ -26,7 +29,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
      */
     @Override
     public boolean add(E element) {
-        if(element == null) {
+        if (element == null) {
             throw new NullPointerException("Null isn't supported in this collection");
         }
 
@@ -36,12 +39,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
 
         int indIns = amountElement;
 
-        if(this.comparator == null) {
-            siftUpComparable(indIns, element);
-        } else {
-            siftUpComparator(indIns, element, comparator);
-
-        }
+        siftUp(indIns, element, comparator);
 
         amountElement++;
 
@@ -54,7 +52,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
      */
     @Override
     public E peek() {
-        return (E) queue[0];
+        return queue[0];
     }
 
     /**
@@ -63,21 +61,15 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
      */
     @Override
     public E poll() {
-        E firstElement = (E) queue[0];
+        E firstElement = queue[0];
         this.amountElement--;
 
-        if(firstElement != null && this.amountElement != 0) {
+        if (firstElement != null && this.amountElement != 0) {
 
             queue[0] = queue[amountElement];
             queue[amountElement] = null;
 
-            if(this.comparator == null) {
-                siftDownComparable(0, (E) this.queue[0]);
-
-            } else {
-                siftDownComparator(0, (E) this.queue[0], comparator);
-            }
-
+            siftDown(0, this.queue[0], comparator);
         }
 
         return firstElement;
@@ -88,38 +80,25 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         return amountElement;
     }
 
+    private void initComparator() {
+        this.comparator = (E o1, E o2) -> {
+            Comparable<? super E> obj = (Comparable<? super E>) o1;
+            return obj.compareTo(o2);
+        };
+    }
+
     private void increaseInnerArray() {
         int newLength = queue.length + 1;
-        Object [] newArr = new Object[newLength];
+        E[] newArr = (E[]) new Object[newLength];
         System.arraycopy(queue, 0, newArr, 0, amountElement);
         queue = newArr;
     }
 
-    private void siftUpComparable(int indIns, E value) {
-        Comparable<? super E> val = (Comparable<? super E>) value;
-
+    private void siftUp(int indIns, E value, Comparator<? super E> cmp) {
         if (indIns == 0) {
-            queue[indIns] = val;
-        }
-
-        for (int i = indIns; i > 0; ) {
-            int indParent = defineParentIndexForSiftUp(i);
-
-            // compare parent and child elements
-            if(val.compareTo((E) queue[indParent]) > 0) {
-                queue[i] = val;
-                break;
-            } else {
-                Object tmp = queue[indParent];
-                queue[indParent] = val;
-                queue[i] = tmp;
-                i = indParent;
+            if (isComparatorFromComparable) {
+                var val = (Comparable<? super E>) value;
             }
-        }
-    }
-
-    private void siftUpComparator(int indIns, E value, Comparator<? super E> cmp) {
-        if (indIns == 0) {
             queue[indIns] = value;
         }
 
@@ -127,11 +106,11 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
             int indParent = defineParentIndexForSiftUp(i);
 
             // compare parent and child elements
-            if(cmp.compare(value, (E) queue[indParent]) > 0) {
+            if (cmp.compare(value, queue[indParent]) > 0) {
                 queue[i] = value;
                 break;
             } else {
-                Object tmp = queue[indParent];
+                E tmp = queue[indParent];
                 queue[indParent] = value;
                 queue[i] = tmp;
                 i = indParent;
@@ -140,35 +119,15 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
 
     }
 
-    private void siftDownComparable(int index, E value) {
-        Comparable<? super E> val = (Comparable<? super E>) value;
-
+    private void siftDown(int index, E value, Comparator<? super E> cmp) {
         for (int i = index; i < this.queue.length; ) {
-            int indexMinElement = compareComparableChildrenElements(i);
+            int indexMinElement = compareChildrenElements(i, cmp);
 
-            if(indexMinElement == -1) {
+            if (indexMinElement == -1) {
                 break;
             }
 
-            if(val.compareTo((E)queue[indexMinElement]) <= 0) {
-                break;
-            } else {
-                queue[i] = queue[indexMinElement];
-                queue[indexMinElement] = value;
-                i = indexMinElement;
-            }
-        }
-    }
-
-    private void siftDownComparator(int index, E value, Comparator<? super E> cmp) {
-        for (int i = index; i < this.queue.length; ) {
-            int indexMinElement = compareChildrenElementsWithComparator(i, cmp);
-
-            if(indexMinElement == -1) {
-                break;
-            }
-
-            if(cmp.compare(value, (E)queue[indexMinElement]) <= 0) {
+            if (cmp.compare(value, queue[indexMinElement]) <= 0) {
                 break;
             } else {
                 queue[i] = queue[indexMinElement];
@@ -188,7 +147,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         return indParent;
     }
 
-    private int compareComparableChildrenElements(int indexParentElement) {
+    private int compareChildrenElements(int indexParentElement, Comparator<? super E> cmp) {
         int indexLeft = indexParentElement * 2 + 1;
         int indexRight = indexParentElement * 2 + 2;
 
@@ -197,28 +156,13 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         } else if ((indexLeft < amountElement && indexRight >= amountElement)) {
             return indexLeft;
         } else {
-            Comparable<? super E> leftChild = (Comparable<? super E>) queue[indexLeft];
-
-            return leftChild.compareTo((E)queue[indexRight]) <= 0 ? indexLeft : indexRight;
-        }
-    }
-
-    private int compareChildrenElementsWithComparator(int indexParentElement, Comparator<? super E> cmp) {
-        int indexLeft = indexParentElement * 2 + 1;
-        int indexRight = indexParentElement * 2 + 2;
-
-        if (indexLeft >= amountElement && indexRight >= amountElement) {
-            return -1;
-        } else if ((indexLeft < amountElement && indexRight >= amountElement)) {
-            return indexLeft;
-        } else {
-            return cmp.compare((E) queue[indexLeft], (E) queue[indexRight]) <= 0 ? indexLeft : indexRight;
+            return cmp.compare(queue[indexLeft], queue[indexRight]) <= 0 ? indexLeft : indexRight;
         }
     }
 
     @Override
     public String toString() {
-        if(amountElement == 0) {
+        if (amountElement == 0) {
             return "[]";
         }
 
@@ -227,7 +171,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         builder.append("[");
 
         for (int i = 0; i < amountElement; i++) {
-            if(i != amountElement - 1) {
+            if (i != amountElement - 1) {
                 builder.append(queue[i]).append(", ");
             } else {
                 builder.append(queue[i]).append("]");
@@ -253,8 +197,8 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
                 if (nextIndex >= queue.length) {
                     throw new IndexOutOfBoundsException();
                 } else {
-                    Object[]copyArr = Arrays.copyOf(queue, queue.length);
-                    E next = (E) copyArr[nextIndex];
+                    E[] copyArr = Arrays.copyOf(queue, queue.length);
+                    E next = copyArr[nextIndex];
                     curElement++;
                     return next;
                 }
