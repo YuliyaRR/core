@@ -103,7 +103,7 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
         }
 
         for (int i = indIns; i > 0; ) {
-            int indParent = defineParentIndexForSiftUp(i);
+            int indParent = (i - 1) / 2;
 
             // compare parent and child elements
             if (cmp.compare(value, queue[indParent]) > 0) {
@@ -135,16 +135,6 @@ public class MyPriorityQueue<E> implements MyQueue<E> {
                 i = indexMinElement;
             }
         }
-    }
-
-    private int defineParentIndexForSiftUp(int index) {
-        int indParent;
-        if (index % 2 == 1) {
-            indParent = index / 2;
-        } else {
-            indParent = index / 2 - 1;
-        }
-        return indParent;
     }
 
     private int compareChildrenElements(int indexParentElement, Comparator<? super E> cmp) {
